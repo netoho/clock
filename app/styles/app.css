@@ -30,14 +30,14 @@ svg.clock {
     stroke-width: 8;
 }
 
-.hour.hand {
+.hours.hand {
     stroke-width: 12;
 }
 
-.minute.hand {
+.minutes.hand {
 }
 
-.second.hand {
+.seconds.hand {
     stroke: red;
     stroke-width: 4;
 }
