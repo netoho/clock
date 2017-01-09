@@ -1,0 +1,21 @@
+<h1>The timezones</h1>
+{{#each model as |timezone|}}
+  <table>
+    <thead>
+    <tr>
+      <th>Name:</th>
+      <th>Offset:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{timezone.name}}</td>
+      <td>{{timezone.offset}}</td>
+    </tr>
+    </tbody>
+  </table>
+{{/each}}
+
+{{#link-to 'timezones.new'}}New TimeZone{{/link-to}}
+
+{{outlet}}
