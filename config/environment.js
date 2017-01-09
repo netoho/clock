@@ -20,6 +20,14 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      isSocketEnable: false,
+      updateFrequency: 1000,
+      API: {
+        domain: 'localhost',
+        port: 8080,
+        protocol: 'http',
+        endpoint: 'date',
+      }
     }
   };
 
