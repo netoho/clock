@@ -1,0 +1,43 @@
+svg.clock {
+    stroke-linecap: round;
+}
+
+.face {
+    stroke: #aac;
+    stroke-width: 6;
+}
+
+.hourtick.face {
+}
+
+.little-circle {
+  stroke-width: 2;
+  fill: #9e2727;
+}
+
+.five.mark {
+  stroke-width: 6;
+  stroke: #e60303;
+}
+
+.minute.mark {
+  stroke-width: 2;
+  stroke: black;
+}
+
+.hand {
+    stroke: #336;
+    stroke-width: 8;
+}
+
+.hour.hand {
+    stroke-width: 12;
+}
+
+.minute.hand {
+}
+
+.second.hand {
+    stroke: red;
+    stroke-width: 4;
+}
