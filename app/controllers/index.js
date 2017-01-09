@@ -1,21 +1,36 @@
 import Ember from 'ember';
-
-const { get, set } = Ember;
+import ENV from 'clock/config/environment';
+const { get, set, run } = Ember;
 
 export default Ember.Controller.extend({
-  time: new Date(),
-  socketIOService: Ember.inject.service('socket-io'),
+  serverDate: Ember.inject.service(),
+  seconds: 0,
+  minutes: 0,
+  hours: 0,
+  day: 0,
   init: function () {
-    let io = get(this, 'socketIOService').socketFor('http://localhost:7000/');
-    // io.on('message', (time) => /*set(this, 'time', time)*/ console.log(time));
-    io.on('message', this.onMessage, this);
-  },
-  onMessage(data) {
-    console.log(data);
-  },
-  actions: {
-    changeTime(){
-      this.set('time', new Date());
+    if(ENV.APP.isSocketEnable){
+      io('http://localhost:7000').on('message', date => {
+        this.set('seconds', date.seconds);
+        this.set('minutes', date.minutes);
+        this.set('hours', date.hours);
+        this.set('day', date.day);
+      });
+    } else {
+      this.getDate();
     }
+  },
+
+  getDate(){
+    Ember.run.later(this, () => {
+      this.get('serverDate').getDate()
+        .then(date => {
+          this.set('seconds', date.seconds);
+          this.set('minutes', date.minutes);
+          this.set('hours', date.hours);
+          this.set('day', date.day);
+        });
+      this.getDate();
+    }, ENV.APP.updateFrequency);
   }
 });

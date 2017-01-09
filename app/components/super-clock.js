@@ -13,52 +13,56 @@ export default Ember.Component.extend({
   tagName: 'svg',
   timezone: '',
   radius: 200,
-  time: new Date(),
+  seconds: 0,
+  minutes: 0,
+  hours: 0,
+  day: '',
 
   didInsertElement() {
     let radius = get(this, 'radius');
     set(this, 'handsData', [
       {
         length: radius,
-        type: 'second',
-        scale: scaleLinear().domain([0, 60]).range([0, 360])
+        type: 'seconds',
+        scale: scaleLinear().domain([0, 60]).range([-90, 270])
       },
       {
-        type: 'minute',
+        type: 'minutes',
         length: radius * 0.7,
-        scale: scaleLinear().domain([0, 60]).range([0, 360])
+        scale: scaleLinear().domain([0, 60]).range([-90, 270])
       },
       {
-        type: 'hour',
+        type: 'hours',
         length: radius * 0.5,
-        scale: scaleLinear().domain([0, 12]).range([0, 360])
+        scale: scaleLinear().domain([0, 12]).range([-90, 270])
       }
     ]);
     set(this, 'center', {x: radius, y: radius});
     run.scheduleOnce('render', this, this.drawClock);
   },
 
-  timeChanged: Ember.observer('time', function () {
-    let time = get(this, 'time');
-    this.updateClock(time);
+  dateChanged: Ember.observer('seconds', function () {
+    let seconds = get(this, 'seconds');
+    let minutes = get(this, 'minutes');
+    let hours = get(this, 'hours');
+    let day = get(this, 'day');
+    this.updateClock(seconds, minutes, hours, day);
   }),
 
-  updateClock(time){
+  updateClock(seconds, minutes, hours, day){
     let handsData = get(this, 'handsData');
     let center = get(this, 'center');
     let hands = get(this, 'hands');
-    let momentDate = moment(time);
-    console.log(momentDate.seconds());
-    // console.log(momentDate.minutes());
-    // console.log(momentDate.hours());
-
     hands.selectAll('line')
       // .data(handsData)
       .transition()
       .attr('transform', d => {
-        if(d.type === 'second'){
-          let scale = d.scale;
-          return `rotate(${scale(momentDate.seconds())}, ${center.x}, ${center.y})`;
+        if(d.type === 'seconds'){
+          return `rotate(${d.scale(seconds)}, ${center.x}, ${center.y})`;
+        } else if(d.type === 'minutes') {
+          return `rotate(${d.scale(minutes)}, ${center.x}, ${center.y})`;
+        } else if(d.type === 'hours') {
+          return `rotate(${d.scale(hours)}, ${center.x}, ${center.y})`;
         }
       });
   },
