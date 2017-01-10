@@ -7,12 +7,12 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('index', { path: '/:timezone' });
   this.route('timezones', function() {
     this.route('index');
-    this.route('edit');
-    this.route('new');
+    this.route('edit', { path: '/:timezoneId/edit'});
+    this.route('new', { path: '/new'});
   });
+  this.route('index');
 });
 
 export default Router;

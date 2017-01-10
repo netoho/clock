@@ -1,20 +1,23 @@
 <h1>The timezones</h1>
-{{#each model as |timezone|}}
+
   <table>
     <thead>
     <tr>
       <th>Name:</th>
       <th>Offset:</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
+    {{#each model as |timezone|}}
     <tr>
       <td>{{timezone.name}}</td>
       <td>{{timezone.offset}}</td>
+        <td>{{#link-to 'timezones.edit' timezone.id}}Editar{{/link-to}}</td>
     </tr>
+    {{/each}}
     </tbody>
   </table>
-{{/each}}
 
 {{#link-to 'timezones.new'}}New TimeZone{{/link-to}}
 
