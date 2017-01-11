@@ -1,7 +1,8 @@
 # clock
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+You can switch between making a get request or using websockets in the environment.js file
+
+Just tootle the isSocketEnable variable
 
 ## Prerequisites
 
