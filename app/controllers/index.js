@@ -8,14 +8,18 @@ export default Ember.Controller.extend({
   minutes: 0,
   hours: 0,
   day: 0,
+  selectedTimezone: null,
   init: function () {
     if(ENV.APP.isSocketEnable){
-      io('http://localhost:7000').on('message', date => {
+      let socket = io('http://localhost:7000');
+      socket.on('message', date => {
+        console.log(date);
         this.set('seconds', date.seconds);
         this.set('minutes', date.minutes);
         this.set('hours', date.hours);
         this.set('day', date.day);
       });
+      this.set('socket', socket);
     } else {
       this.getDate();
     }
@@ -23,7 +27,8 @@ export default Ember.Controller.extend({
 
   getDate(){
     Ember.run.later(this, () => {
-      this.get('serverDate').getDate()
+      let offset = this.get('selectedTimezone.offset');
+      this.get('serverDate').getDate(offset)
         .then(date => {
           this.set('seconds', date.seconds);
           this.set('minutes', date.minutes);
@@ -32,5 +37,13 @@ export default Ember.Controller.extend({
         });
       this.getDate();
     }, ENV.APP.updateFrequency);
+  },
+  actions: {
+    selectTimezone(selectedTimezone) {
+      this.set('selectedTimezone', selectedTimezone);
+      if(ENV.APP.isSocketEnable) {
+        this.get('socket').emit('timezone', selectedTimezone.get('offset'));
+      }
+    }
   }
 });

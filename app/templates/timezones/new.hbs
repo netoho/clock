@@ -1,6 +1,12 @@
-{{outlet}}
+<br>
 
-{{input type='text' value=model.name placeholder='Enter the timezone name' }} <br>
-{{input type='text' value=model.offset placeholder='Enter the timezone offset: -5' }}
+<div>
+  {{input type='text' value=model.name placeholder='Enter the timezone name' }}
+</div>
+<div>
+  {{input type='text' value=model.offset placeholder='Enter the timezone offset: -5' }} <br>
+</div>
 
-<button type="button" onclick={{action 'save' model}}>Save</button>
+<br>
+
+<button type="button" onclick={{action 'save' model}}>Save</button> {{#link-to 'timezones'}}Cancelar{{/link-to}}

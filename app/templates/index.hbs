@@ -1,4 +1,3 @@
-{{model}}
 {{super-clock
   seconds=seconds
   minutes=minutes
@@ -6,5 +5,18 @@
   day=day}}
 {{outlet}}
 
+<br>
+
+<h2>Select the timezone</h2>
+
+{{#power-select
+  options=model
+  onchange=(action 'selectTimezone')
+  searchField='name'
+  selected=selectedTimezone as |timezone|}}
+  {{timezone.name}} with {{timezone.offset}}
+{{/power-select}}
+
+<br>
 
 {{#link-to 'timezones' }}See timezones{{/link-to}}

@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
     save(newTimeZone) {
       newTimeZone.save().then(() => {
         alert('Timezone successfully saved');
-        this.transitionToRoute('timezones.index');
+        this.transitionToRoute('timezones');
       });
     }
   }
